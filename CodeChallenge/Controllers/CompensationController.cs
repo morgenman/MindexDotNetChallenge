@@ -24,15 +24,22 @@ namespace CodeChallenge.Controllers
         {
             _logger.LogDebug($"Received employee get request for '{id}'");
 
-            var employee = _employeeService.GetById(id);
+            var compensation = _employeeService.GetCompensationById(id);
 
-            if (employee == null)
+            if (compensation == null)
                 return NotFound();
 
-            var reportStruct = new ReportingStructure(employee);
+            return Ok(compensation);
+        }
 
+        [HttpPost]
+        public IActionResult AddCompensation([FromBody] Compensation compensation)
+        {
+            _logger.LogDebug($"Received compensation add request for '{compensation?.Employee.FirstName} {compensation?.Employee.LastName}'");
 
-            return Ok(reportStruct);
+            _employeeService.AddCompensation(compensation);
+
+            return CreatedAtRoute("getCompensationById", new { id = compensation.Employee.EmployeeId }, compensation);
         }
     }
 }

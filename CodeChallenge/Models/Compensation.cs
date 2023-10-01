@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace CodeChallenge.Models
 {
+    [Keyless]
     public class Compensation
     {
         public Employee Employee { get; set; }
