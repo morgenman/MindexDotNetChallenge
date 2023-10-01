@@ -11,12 +11,14 @@ namespace CodeChallenge.Services
     public class EmployeeService : IEmployeeService
     {
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly ICompensationRepository _compensationRepository;
         private readonly ILogger<EmployeeService> _logger;
 
-        public EmployeeService(ILogger<EmployeeService> logger, IEmployeeRepository employeeRepository)
+        public EmployeeService(ILogger<EmployeeService> logger, IEmployeeRepository employeeRepository, ICompensationRepository compensationRepository)
         {
             _employeeRepository = employeeRepository;
             _logger = logger;
+            _compensationRepository = compensationRepository;
         }
 
         public Employee Create(Employee employee)
@@ -38,6 +40,21 @@ namespace CodeChallenge.Services
             }
 
             return null;
+        }
+
+        public Compensation GetCompensationById(string id)
+        {
+            if (!String.IsNullOrEmpty(id))
+            {
+                return _compensationRepository.GetById(id);
+            }
+
+            return null;
+        }
+
+        public Compensation AddCompensation(Compensation compensation)
+        {
+            return _compensationRepository.Add(compensation);
         }
 
         public Employee Replace(Employee originalEmployee, Employee newEmployee)
