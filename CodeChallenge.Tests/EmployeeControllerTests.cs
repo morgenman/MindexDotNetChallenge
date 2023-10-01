@@ -2,7 +2,6 @@ using System;
 using System.Net;
 using System.Net.Http;
 using System.Text;
-
 using CodeChallenge.Models;
 
 using CodeCodeChallenge.Tests.Integration.Extensions;
@@ -13,7 +12,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace CodeCodeChallenge.Tests.Integration
 {
     [TestClass]
-    public class EmployeeControllerTests
+    public class ControllerTests
     {
         private static HttpClient _httpClient;
         private static TestServer _testServer;
@@ -132,29 +131,8 @@ namespace CodeCodeChallenge.Tests.Integration
             // Assert
             Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
         }
-    }
 
-    [TestClass]
-    public class ReportingStructureControllerTests
-    {
-        private static HttpClient _httpClient;
-        private static TestServer _testServer;
 
-        [ClassInitialize]
-        // Attribute ClassInitialize requires this signature
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
-        public static void InitializeClass(TestContext context)
-        {
-            _testServer = new TestServer();
-            _httpClient = _testServer.NewClient();
-        }
-
-        [ClassCleanup]
-        public static void CleanUpTest()
-        {
-            _httpClient.Dispose();
-            _testServer.Dispose();
-        }
 
         [TestMethod]
         public void GetReportingStructureById_Returns_Subordinate_Count()
@@ -202,29 +180,6 @@ namespace CodeCodeChallenge.Tests.Integration
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             var reportingStructure = response.DeserializeContent<ReportingStructure>();
             Assert.AreEqual(expectedDirectReports, reportingStructure.NumberOfReports);
-        }
-    }
-
-    [TestClass]
-    public class CompensationControllerTests
-    {
-        private static HttpClient _httpClient;
-        private static TestServer _testServer;
-
-        [ClassInitialize]
-        // Attribute ClassInitialize requires this signature
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
-        public static void InitializeClass(TestContext context)
-        {
-            _testServer = new TestServer();
-            _httpClient = _testServer.NewClient();
-        }
-
-        [ClassCleanup]
-        public static void CleanUpTest()
-        {
-            _httpClient.Dispose();
-            _testServer.Dispose();
         }
 
         // Getting compensation for an employee without compensation info set should return not found.
