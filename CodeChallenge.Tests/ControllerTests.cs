@@ -254,7 +254,7 @@ namespace CodeCodeChallenge.Tests.Integration
             Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
             var newCompensation = response.DeserializeContent<Compensation>();
             Assert.AreEqual(salary, newCompensation.Salary);
-            Assert.AreEqual(employeeId, newCompensation.Id);
+            Assert.AreEqual(employeeId, newCompensation.EmployeeId);
             Assert.AreEqual(employeeId, newCompensation.Employee.EmployeeId);
             Assert.AreEqual(compensation.EffectiveDate.Date, newCompensation.EffectiveDate);
         }
@@ -286,7 +286,7 @@ namespace CodeCodeChallenge.Tests.Integration
             Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
             var newCompensation = response.DeserializeContent<Compensation>();
             Assert.AreEqual(salary, newCompensation.Salary);
-            Assert.AreEqual(employeeId, newCompensation.Id);
+            Assert.AreEqual(employeeId, newCompensation.EmployeeId);
             Assert.AreEqual(employeeId, newCompensation.Employee.EmployeeId);
             Assert.AreEqual(DateTime.Now.Date, newCompensation.EffectiveDate);
         }

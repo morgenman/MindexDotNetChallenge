@@ -13,12 +13,14 @@ namespace CodeChallenge.Controllers
         private readonly ILogger _logger;
         private readonly IEmployeeService _employeeService;
 
+        // Included logger per existing logger pattern in EmployeeController
         public CompensationController(ILogger<EmployeeController> logger, IEmployeeService employeeService)
         {
             _logger = logger;
             _employeeService = employeeService;
         }
 
+        // Get a the salary of an employee by employee id
         [HttpGet("{id}", Name = "getCompensationById")]
         public IActionResult GetCompensationById(String id)
         {
@@ -26,12 +28,14 @@ namespace CodeChallenge.Controllers
 
             var compensation = _employeeService.GetCompensationById(id);
 
+            // Return appropriate response on null
             if (compensation == null)
                 return NotFound();
 
             return Ok(compensation);
         }
 
+        // Add salary amount to an employee by employee id
         [HttpPost]
         public IActionResult AddCompensation([FromBody] Compensation compensation)
         {

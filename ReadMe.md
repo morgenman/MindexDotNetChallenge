@@ -1,36 +1,60 @@
 # Mindex Coding Challenge
+
+---
+
+## Notes to the reviewer:
+
+- By default direct reports under employees were being lazily loaded. As such, querying for such an employee with direct reports showed 0 direct reports. I fixed this by adding `AsEnumerable()` to the `GetById` method. It would likely be better to disable lazy loading for the whole project. As far as I know, this is the only change to existing code, aside from the additions in EmployeeService.
+- I chose to store compensation under the Employee service, for the purpose of maintaining one single context.
+- I originally separated out the tests into separate classes reflecting each controller. Unfortunately I ran into some issues with the class cleanup. Changes to the database from one class were persisting into the next class when clicking the 'run all tests' button.
+- I chose to delete compensation information when deleting an employee. This logic seems sound, but it should be noted that this also triggers when an employee is being updated.
+- Finally, I chose to use a DateTime object rather than a string for the date effective field. I felt this was useful due to input sanitization and the ability to chop off just the date part.
+
+Please let me know if you have any questions about my design decisions.
+
+Thank you for your consideration!
+
+---
+
+# Instructions
+
 ## What's Provided
-A simple [.Net 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) web application has been created and bootstrapped 
-with data. The application contains information about all employees at a company. On application start-up, an in-memory 
+
+A simple [.Net 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) web application has been created and bootstrapped
+with data. The application contains information about all employees at a company. On application start-up, an in-memory
 database is bootstrapped with a serialized snapshot of the database. While the application runs, the data may be
 accessed and mutated in the database without impacting the snapshot.
 
 ### How to Run
+
 You can run this by executing `dotnet run` on the command line or in [Visual Studio Community Edition](https://www.visualstudio.com/downloads/).
 
-
 ### How to Use
+
 The following endpoints are available to use:
+
 ```
 * CREATE
-    * HTTP Method: POST 
+    * HTTP Method: POST
     * URL: localhost:8080/api/employee
     * PAYLOAD: Employee
     * RESPONSE: Employee
 * READ
-    * HTTP Method: GET 
+    * HTTP Method: GET
     * URL: localhost:8080/api/employee/{id}
     * RESPONSE: Employee
 * UPDATE
-    * HTTP Method: PUT 
+    * HTTP Method: PUT
     * URL: localhost:8080/api/employee/{id}
     * PAYLOAD: Employee
     * RESPONSE: Employee
 ```
+
 The Employee has a JSON schema of:
+
 ```json
 {
-  "type":"Employee",
+  "type": "Employee",
   "properties": {
     "employeeId": {
       "type": "string"
@@ -39,32 +63,36 @@ The Employee has a JSON schema of:
       "type": "string"
     },
     "lastName": {
-          "type": "string"
+      "type": "string"
     },
     "position": {
-          "type": "string"
+      "type": "string"
     },
     "department": {
-          "type": "string"
+      "type": "string"
     },
     "directReports": {
       "type": "array",
-      "items" : "string"
+      "items": "string"
     }
   }
 }
 ```
+
 For all endpoints that require an "id" in the URL, this is the "employeeId" field.
 
 ## What to Implement
+
 Clone or download the repository, do not fork it.
 
 ### Task 1
+
 Create a new type, ReportingStructure, that has two properties: employee and numberOfReports.
 
-For the field "numberOfReports", this should equal the total number of reports under a given employee. The number of 
-reports is determined to be the number of directReports for an employee and all of their direct reports. For example, 
+For the field "numberOfReports", this should equal the total number of reports under a given employee. The number of
+reports is determined to be the number of directReports for an employee and all of their direct reports. For example,
 given the following employee structure:
+
 ```
                     John Lennon
                 /               \
@@ -72,16 +100,19 @@ given the following employee structure:
                                /        \
                           Pete Best     George Harrison
 ```
-The numberOfReports for employee John Lennon (employeeId: 16a596ae-edd3-4847-99fe-c4518e82c86f) would be equal to 4. 
 
-This new type should have a new REST endpoint created for it. This new endpoint should accept an employeeId and return 
-the fully filled out ReportingStructure for the specified employeeId. The values should be computed on the fly and will 
+The numberOfReports for employee John Lennon (employeeId: 16a596ae-edd3-4847-99fe-c4518e82c86f) would be equal to 4.
+
+This new type should have a new REST endpoint created for it. This new endpoint should accept an employeeId and return
+the fully filled out ReportingStructure for the specified employeeId. The values should be computed on the fly and will
 not be persisted.
 
 ### Task 2
-Create a new type, Compensation. A Compensation has the following fields: employee, salary, and effectiveDate. Create 
-two new Compensation REST endpoints. One to create and one to read by employeeId. These should persist and query the 
+
+Create a new type, Compensation. A Compensation has the following fields: employee, salary, and effectiveDate. Create
+two new Compensation REST endpoints. One to create and one to read by employeeId. These should persist and query the
 Compensation from the persistence layer.
 
 ## Delivery
+
 Please upload your results to a publicly accessible Git repo. Free ones are provided by Github and Bitbucket.

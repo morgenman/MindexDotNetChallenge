@@ -33,7 +33,7 @@ namespace CodeChallenge.Repositories
         public Employee GetById(string id)
         {
             // Enumerated the employee DbSet in order to force all children to be included. 
-            // Ideally I would disable lazy loading, but I didn't see an easy way to do that. 
+            // Ideally I would disable lazy loading, but I aimed for minimal impact.
             return _employeeContext.Employees.AsEnumerable().SingleOrDefault(e => e.EmployeeId == id);
         }
 

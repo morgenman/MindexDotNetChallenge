@@ -42,6 +42,7 @@ namespace CodeChallenge.Services
             return null;
         }
 
+        // Get compensation amount by employee id
         public Compensation GetCompensationById(string id)
         {
             if (!String.IsNullOrEmpty(id))
@@ -52,6 +53,7 @@ namespace CodeChallenge.Services
             return null;
         }
 
+        // Add compensation amount to employee by compensation object
         public Compensation AddCompensation(Compensation compensation)
         {
             return _compensationRepository.Add(compensation);
