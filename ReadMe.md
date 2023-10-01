@@ -2,7 +2,7 @@
 
 ## Notes to the reviewer:
 
-- By default direct reports under employees were being lazily loaded. As such, querying for such an employee with direct reports showed 0 direct reports. I fixed this by adding `AsEnumerable()` to the `GetById` method. It would likely be better to disable lazy loading for the whole project. As far as I know, this is the only change to existing code, aside from the additions in EmployeeService.
+- By default direct reports under employees were being lazily loaded. As such, querying for an employee with direct reports showed 0 direct reports. I fixed this by adding `AsEnumerable()` to the `GetById` method. It would likely be better to disable lazy loading for the whole project. As far as I know, this is the only change to existing code, aside from the additions in EmployeeService.
 - I chose to store compensation under the Employee service, for the purpose of maintaining one single context.
 - I originally separated out the tests into separate classes reflecting each controller. Unfortunately I ran into some issues with the class cleanup. Changes to the database from one class were persisting into the next class when clicking the 'run all tests' button.
 - I chose to delete compensation information when deleting an employee. This logic seems sound, but it should be noted that this also triggers when an employee is being updated.
