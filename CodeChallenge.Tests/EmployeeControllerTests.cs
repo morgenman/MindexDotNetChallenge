@@ -132,5 +132,36 @@ namespace CodeCodeChallenge.Tests.Integration
             // Assert
             Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
         }
+
+        //// TODO: ReportingStructure Tests
+        //[TestMethod]
+        //public void ReportingStructure_Returns_Subordinate_Count()
+        //{
+        //    // Arrange
+        //    var employee = new Employee()
+        //    {
+        //        Department = "Complaints",
+        //        FirstName = "Debbie",
+        //        LastName = "Downer",
+        //        Position = "Receiver",
+        //    };
+
+        //    var requestContent = new JsonSerialization().ToJson(employee);
+
+        //    // Execute
+        //    var postRequestTask = _httpClient.PostAsync("api/employee",
+        //       new StringContent(requestContent, Encoding.UTF8, "application/json"));
+        //    var response = postRequestTask.Result;
+
+        //    // Assert
+        //    Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
+
+        //    var newEmployee = response.DeserializeContent<Employee>();
+        //    Assert.IsNotNull(newEmployee.EmployeeId);
+        //    Assert.AreEqual(employee.FirstName, newEmployee.FirstName);
+        //    Assert.AreEqual(employee.LastName, newEmployee.LastName);
+        //    Assert.AreEqual(employee.Department, newEmployee.Department);
+        //    Assert.AreEqual(employee.Position, newEmployee.Position);
+        //}
     }
 }
