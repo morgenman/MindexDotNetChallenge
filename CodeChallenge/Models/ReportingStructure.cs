@@ -13,12 +13,7 @@ namespace CodeChallenge.Models
             Employee = e;
         }
 
-        public int NumberOfReports { 
-            get {
-                return GetNumberOfReports(Employee);
-            }
-            set { }
-        }
+        public int NumberOfReports => GetNumberOfReports(Employee);
 
         private int GetNumberOfReports(Employee employee)
         {

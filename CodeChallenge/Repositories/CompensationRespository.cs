@@ -22,17 +22,19 @@ namespace CodeChallenge.Repositories
 
         public Compensation Add(Compensation compensation)
         {
+            compensation.Id = compensation.Employee.EmployeeId;
             // Only return compensation if the employee exists in the database.
             if(_employeeContext.Employees.Contains(compensation.Employee)) _employeeContext.Compensations.Add(compensation);
+            if(compensation.EffectiveDate == DateTime.MinValue) compensation.EffectiveDate = DateTime.Now.Date;
             else return null;
             return compensation;
         }
 
         public Compensation GetById(string id)
         {
-            // Enumerated the employee DbSet in order to force all children to be included. 
+            // Enumerated the employee DbSet in order to force all descendant employees to be included in query. 
             // Ideally I would disable lazy loading, but I didn't see an easy way to do that. 
-            return _employeeContext.Compensations.AsEnumerable().SingleOrDefault(e => e.Employee.EmployeeId == id);
+            return _employeeContext.Compensations.AsEnumerable().SingleOrDefault(e => e.Id == id);
         }
 
         public Task SaveAsync()

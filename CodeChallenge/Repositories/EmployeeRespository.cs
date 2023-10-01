@@ -22,6 +22,9 @@ namespace CodeChallenge.Repositories
 
         public Employee Add(Employee employee)
         {
+            // As of right now adding an employee with subordinates causes an ID conflict.
+            // I would fix this but it's out of scope of my assignment.
+            employee.DirectReports = null;
             employee.EmployeeId = Guid.NewGuid().ToString();
             _employeeContext.Employees.Add(employee);
             return employee;
@@ -41,7 +44,9 @@ namespace CodeChallenge.Repositories
 
         public Employee Remove(Employee employee)
         {
-            return _employeeContext.Remove(employee).Entity;
+            // In order to prevent an existing salary from being assigned to a replacement employee, I have chosen to delete the compensation when an employee is updated.
+            _employeeContext.Compensations.ToList().RemoveAll(c => c.Employee == employee);
+            return _employeeContext.Employees.Remove(employee).Entity;
         }
     }
 }
