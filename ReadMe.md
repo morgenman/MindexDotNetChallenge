@@ -1,7 +1,5 @@
 # Mindex Coding Challenge
 
----
-
 ## Notes to the reviewer:
 
 - By default direct reports under employees were being lazily loaded. As such, querying for such an employee with direct reports showed 0 direct reports. I fixed this by adding `AsEnumerable()` to the `GetById` method. It would likely be better to disable lazy loading for the whole project. As far as I know, this is the only change to existing code, aside from the additions in EmployeeService.
@@ -13,8 +11,6 @@
 Please let me know if you have any questions about my design decisions.
 
 Thank you for your consideration!
-
----
 
 # Instructions
 
