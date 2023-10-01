@@ -29,7 +29,9 @@ namespace CodeChallenge.Repositories
 
         public Employee GetById(string id)
         {
-            return _employeeContext.Employees.SingleOrDefault(e => e.EmployeeId == id);
+            // Enumerated the employee DbSet in order to force all children to be included. 
+            // Ideally I would disable lazy loading, but I didn't see an easy way to do that. 
+            return _employeeContext.Employees.AsEnumerable().SingleOrDefault(e => e.EmployeeId == id);
         }
 
         public Task SaveAsync()
